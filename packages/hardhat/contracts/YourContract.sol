@@ -7,11 +7,6 @@ import "hardhat/console.sol";
 // Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
 // import "@openzeppelin/contracts/access/Ownable.sol";
 
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
 contract YourContract {
 	// State Variables
 	address public immutable owner;
@@ -19,6 +14,9 @@ contract YourContract {
 	bool public premium = false;
 	uint256 public totalCounter = 0;
 	mapping(address => uint) public userGreetingCounter;
+	uint256 public totalVoteYes = 0;
+	uint256 public totalVoteNo = 0;
+	
 
 	// Events: a way to emit log statements from smart contract that can be listened to by external parties
 	event GreetingChange(
@@ -41,6 +39,15 @@ contract YourContract {
 		require(msg.sender == owner, "Not the Owner");
 		_;
 	}
+
+	function voteYes() public {
+		totalVoteYes += 1;
+	}
+
+	function voteNo() public {
+		totalVoteNo += 1;
+	}
+
 
 	/**
 	 * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
